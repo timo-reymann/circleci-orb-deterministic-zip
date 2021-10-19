@@ -30,8 +30,8 @@ parameters:
 
 steps:
   - checkout
-  - deterministic-zip/install
-  - deterministic-zip/zip:
+  - install
+  - zip:
       target: <<parameters.target>>
       source: <<parameters.source>>
       args: <<parameters.args>>
