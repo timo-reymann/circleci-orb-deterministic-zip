@@ -1,0 +1,26 @@
+description: >
+  Use the commands to integrate into your existing build and zip files together
+usage:
+  version: 2.1
+  orbs:
+    deterministic-zip: timo-reymann/deterministic-zip@<version>
+
+  executors:
+    ubuntu:
+      docker:
+        - image: cimg/base:2021.04
+
+  jobs:
+    github_release:
+      executor: ubuntu
+      steps:
+        - checkout
+        - deterministic-zip/install
+        - run:
+            command: |
+              mkdir -p src/
+              touch src/test.txt
+              touch src/te.tx
+        - deterministic-zip/zip:
+            target: build.zip
+            source: src/*
