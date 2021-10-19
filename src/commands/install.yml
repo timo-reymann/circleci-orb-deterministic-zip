@@ -1,0 +1,42 @@
+description: >
+  Install deterministic-zip
+steps:
+  - run:
+      name: Install deterministic-zip
+      command: |
+        if uname -a | grep "Darwin"; then
+          export SYS_ENV_PLATFORM=macos
+        elif uname -a | grep "x86_64 GNU/Linux"; then
+          export SYS_ENV_PLATFORM=linux_x86
+        elif uname -a | grep "aarch64 GNU/Linux"; then
+          export SYS_ENV_PLATFORM=linux_arm
+        else
+          echo "This platform appears to be unsupported."
+          uname -a
+          exit 1
+        fi
+
+        echo "Platform $SYS_ENV_PLATFORM"
+        # Install per platform
+        case $SYS_ENV_PLATFORM in
+        linux_x86)
+          curl -LO https://github.com/timo-reymann/deterministic-zip/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/deterministic-zip/releases/latest | grep -o '[^/]*$')/deterministic-zip_linux-amd64 && \
+          chmod +x deterministic-zip_linux-amd64 && \
+          sudo mv deterministic-zip_linux-amd64 /usr/local/bin/deterministic-zip
+          ;;
+        linux_arm)
+          curl -LO https://github.com/timo-reymann/deterministic-zip/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/deterministic-zip/releases/latest | grep -o '[^/]*$')/deterministic-zip_linux-arm64 && \
+          chmod +x deterministic-zip_linux-arm64 && \
+          sudo mv deterministic-zip_linux-arm64 /usr/local/bin/deterministic-zip
+          ;;
+        macos)
+          curl -LO https://github.com/timo-reymann/deterministic-zip/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/deterministic-zip/releases/latest | grep -o '[^/]*$')/deterministic-zip_darwin-amd64 && \
+          chmod +x deterministic-zip_darwin-amd64 && \
+          sudo mv deterministic-zip_darwin-amd64 /usr/local/bin/deterministic-zip
+          ;;
+        *)
+          echo "This orb does not currently support your platform. If you believe it should, please consider opening an issue on the GitHub repository:"
+          echo "https://github.com/timo-reymann/circleci-orb-deterministic-zip/issues/new"
+          exit 1
+          ;;
+        esac

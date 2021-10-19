@@ -1,0 +1,8 @@
+version: 2.1
+
+description: |
+  Install deterministic-zip
+
+display:
+  home_url: "https://github.com/timo-reymann/circleci-orb-deterministic-zip"
+  source_url: "https://github.com/timo-reymann/circleci-orb-deterministic-zip"

@@ -1,0 +1,21 @@
+description: >
+  Use the commands to integrate into your existing build easily
+usage:
+  version: 2.1
+  orbs:
+    deterministic-zip: timo-reymann/deterministic-zip@<version>
+
+  executors:
+    ubuntu:
+      docker:
+        - image: cimg/base:2021.04
+
+  jobs:
+    github_release:
+      executor: ubuntu
+      steps:
+        - checkout
+        - deterministic-zip/install
+        - run:
+            name: Print version
+            command: deterministic-zip --version
