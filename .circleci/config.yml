@@ -34,4 +34,5 @@ workflows:
           <<: *require_tests
           <<: *filter_all
           attach_workspace: true
+          vcs_type: gh
           orb_name: ${CIRCLE_PROJECT_USERNAME}/deterministic-zip
