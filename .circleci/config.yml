@@ -30,7 +30,7 @@ workflows:
           <<: *filter_all
       - orb-tools/pack:
           <<: *filter_all
-      - orb-tools/publish-dev:
+      - orb-tools/publish_dev:
           <<: *require_tests
           orb-name: ${CIRCLE_PROJECT_USERNAME}/deterministic-zip
       - orb-tools/publish:
